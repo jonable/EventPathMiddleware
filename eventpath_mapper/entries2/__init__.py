@@ -1,0 +1,1 @@
+"""Entries2 is to replace the app 'entries' in the future"""

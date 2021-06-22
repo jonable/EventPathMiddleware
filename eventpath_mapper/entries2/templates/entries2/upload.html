@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{event_code}} {{event_subcode}} | Upload GS JSON Data</title>
+</head>
+<body>
+	<div class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				{% if messages %}
+				<ul class="messages">
+				    {% for message in messages %}
+				    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				    {% endfor %}
+				</ul>
+				{% endif %}				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Select the data to upload for {{event_code}} {{event_subcode}}</h2>
+				<form action="/upload_action/" method="POST" enctype="multipart/form-data">
+					{% for field in form.visible_fields %}
+						  <div class="form-group">
+						    <label for="field.id">{{field.name}}</label>
+							{{field}}							
+						  </div>
+					{% endfor %}
+					<div style="display:none">
+					{% for hidden in form.hidden_fields %}
+					{{ hidden }}
+					{% endfor %}			
+					</div>		
+					{% csrf_token %}
+					<br>
+					<input type="submit" name="submit" value="upload">
+				</form>
+				<textarea id="testarea"></textarea>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+  function readSingleFile(evt) {
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+    var testarea = document.getElementById('testarea')
+    if (f) {
+      var r = new FileReader();
+      r.onload = function(e) { 
+	      var contents = e.target.result;
+        alert( "Got the file.n" 
+              +"name: " + f.name + "n"
+              +"type: " + f.type + "n"
+              +"size: " + f.size + " bytesn"
+              + "starts with: " + contents.substr(1, contents.indexOf("n"))
+        );  
+        testarea.value = contents;
+      }
+      r.readAsText(f);
+    } else { 
+      alert("Failed to load file");
+    }
+  }
+
+  document.getElementById('id_file').addEventListener('change', readSingleFile, false);
+</script>
+</body>
+</html>

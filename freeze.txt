@@ -1,0 +1,10 @@
+CherryPy==3.6.0
+Django==1.8
+gnureadline==6.3.3
+ipdb==0.8
+ipython==3.1.0
+jsonfield==1.0.3
+psycopg2==2.6
+wsgiref==0.1.2
+xlrd==0.9.3
+xlwt==1.0.0
